@@ -1,0 +1,28 @@
+int ir1 = 1;
+int ir2 = 2;
+int count = 0;
+// The sensors are placed against the fence and help to identify and track the movement of the sheeps
+void setup()
+{
+  pinMode(ir1, INPUT);
+  pinMode(ir2, INPUT);
+  Serial.begin(9600);
+}
+
+void loop(){
+  sensor1=digitalRead(ir1);
+  sensor2=digitalRead(ir2);
+  if (sensor1==HIGH){
+    delay(2000);//Assume that time taken for the sheep to cross the next sensor
+    if (sensor2==HIGH){
+      count=count+1;// Sheep count has increased since it moves in to the field
+    }
+  }
+  else if (sensor2==HIGH){
+    delay(2000);
+    if (sensor1==HIGH){
+      count=count-1;// Sheep count has decreased since it moves out of the field.
+    }
+  }
+  Serial.println(count);
+}
